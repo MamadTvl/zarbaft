@@ -10,14 +10,14 @@ services:
     working_dir: /root/
     environment:
       - DB_HOST=mysql2
-      - DB_PORT=3306
+      - DB_PORT=33060
       - DB_NAME=zarbaft_linom
       - DB_USER=root
       - DB_PASSWORD=12345678
     networks:
       - bankai
     ports:
-      - "3000:3000"
+      - "3543:3000"
 
   admin2:
     container_name: phpmyadmin2
