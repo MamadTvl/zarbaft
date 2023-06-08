@@ -19,25 +19,25 @@ services:
     ports:
       - "3543:3000"
 
-  admin2:
-    container_name: phpmyadmin2
-    image: registry.hamdocker.ir/linom/phpmyadmin:5.2.0-apache
-    restart: always
-    networks:
-      - bankai
-    depends_on:
-      - mysql2
-    environment:
-      - MYSQL_ROOT_PASSWORD=12345678
-      - PMA_HOST=mysql
-      - PMA_PORT=3306
-      - UPLOAD_LIMIT=300M
-      - MEMORY_LIMIT=-1
-      - MAX_EXECUTION_TIME
-    ports:
-      - "4001:80"
+  # admin2:
+  #   container_name: phpmyadmin2
+  #   image: registry.hamdocker.ir/linom/phpmyadmin:5.2.0-apache
+  #   restart: always
+  #   networks:
+  #     - bankai
+  #   depends_on:
+  #     - mysql2
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=12345678
+  #     - PMA_HOST=mysql
+  #     - PMA_PORT=3306
+  #     - UPLOAD_LIMIT=300M
+  #     - MEMORY_LIMIT=-1
+  #     - MAX_EXECUTION_TIME
+  #   ports:
+  #     - "4001:80"
   mysql2:
-      image: registry.hamdocker.ir/linom/mysql:8
+      image: mysql:8
       restart: always
       container_name: mysql2
       command: --default-authentication-plugin=mysql_native_password
