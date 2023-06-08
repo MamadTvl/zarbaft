@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  bankai:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mysql2
+    hostname: bankai
+    working_dir: /root/
+    environment:
+      - DB_HOST=mysql2
+      - DB_PORT=3306
+      - DB_NAME=zarbaft_linom
+      - DB_USER=root
+      - DB_PASSWORD=12345678
+    networks:
+      - bankai
+    ports:
+      - "3000:3000"
+
+  admin2:
+    container_name: phpmyadmin2
+    image: registry.hamdocker.ir/linom/phpmyadmin:5.2.0-apache
+    restart: always
+    networks:
+      - bankai
+    depends_on:
+      - mysql2
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - UPLOAD_LIMIT=300M
+      - MEMORY_LIMIT=-1
+      - MAX_EXECUTION_TIME
+    ports:
+      - "4001:80"
+  mysql2:
+      image: registry.hamdocker.ir/linom/mysql:8
+      restart: always
+      container_name: mysql2
+      command: --default-authentication-plugin=mysql_native_password
+      environment:
+        - MYSQL_DATABASE=zarbaft_linom
+        - MYSQL_ROOT_PASSWORD=12345678
+        - MYSQL_ROOT_HOST=%
+        - MYSQL_ALLOW_EMPTY_PASSWORD=ok
+      volumes:
+        - ./mysql-data:/var/lib/mysql
+        - ./mysql-data.sql:/docker-entrypoint-initdb.d/datadump.sql:ro
+        - ./mysql.cnf:/etc/mysql/my.cnf:ro
+      networks:
+        - bankai
+
+networks:
+  bankai:
