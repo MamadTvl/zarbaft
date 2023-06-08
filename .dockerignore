@@ -1,0 +1,8 @@
+.git
+.gitignore
+mysql.env
+.env
+mysql-data
+mysql-data.sql
+mysql.cnf
+Dockerfile
